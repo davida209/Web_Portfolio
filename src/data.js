@@ -15,6 +15,7 @@ export const projects = [
     category: "Turismo",
     type: "Experiencias & turismo",
     url: "https://cancun-tours26.vercel.app/",
+    repo: "https://github.com/davida209/cancun-tours",
     description:
       "Una experiencia web dedicada a los tours y las experiencias de la Riviera Maya.",
     color: "sea",
@@ -30,6 +31,7 @@ export const projects = [
     category: "Corporativo",
     type: "Presencia corporativa",
     url: "https://construction-frontend-ten.vercel.app/",
+    repo: "https://github.com/davida209/constructora-pro",
     description:
       "Presencia digital para el sector de la construcción, con una identidad enfocada en obras que perduran.",
     color: "stone",
@@ -43,15 +45,16 @@ export const projects = [
     number: "03",
     name: "RagUT",
     category: "Educación",
-    type: "Plataforma educativa IA",
+    type: "Campus educativo interactivo",
     url: "https://ragut.vercel.app/login",
+    repo: "https://github.com/davida209/ragut",
     description:
-      "Una plataforma educativa de inteligencia artificial, con acceso desde su página de inicio de sesión.",
+      "Campus de demostración con cursos, progreso, cuestionarios y búsqueda de material de estudio.",
     color: "blue",
     visual: "RagUT",
     subtitle: "Conocimiento conectado.",
     details:
-      "Proyecto de plataforma educativa IA. Su enlace público conduce al inicio de sesión; algunas funciones pueden requerir una cuenta.",
+      "Demo educativa con acceso de prueba, seguimiento de lecciones, cuestionarios y recuperación de fragmentos de material de estudio. Los datos se guardan en el navegador; no utiliza cuentas reales ni conexión a un modelo de IA.",
   },
   {
     id: "wiki",
@@ -60,6 +63,7 @@ export const projects = [
     category: "Contenido",
     type: "Wiki & contenido",
     url: "https://prototipo-wiki-ten.vercel.app/",
+    repo: "https://github.com/davida209/turno-rosso-wiki",
     description:
       "Un prototipo de wiki para explorar y organizar contenido bajo la identidad de Turno Rosso.",
     color: "red",
@@ -67,5 +71,19 @@ export const projects = [
     subtitle: "Un espacio para explorar.",
     details:
       "Prototipo web de una wiki. Consulta la versión publicada para explorar el contenido disponible y su organización.",
+  },
+  {
+    id: "nexo",
+    number: "05",
+    name: "Nexo Supply",
+    category: "Ecommerce",
+    type: "Catálogo & experiencia de compra",
+    url: "https://nexo-supply.vercel.app/",
+    repo: "https://github.com/davida209/nexo-supply",
+    description: "Una tienda de accesorios de escritorio con catálogo, variantes, favoritos y carrito interactivo.",
+    color: "orange",
+    visual: "NEXO\nSUPPLY",
+    subtitle: "Diseña tu espacio. Encuentra tu ritmo.",
+    details: "Demo de ecommerce con búsqueda, variantes, carrito, cupón y seguimiento de pedidos simulados. El inventario y los pedidos se guardan en el navegador. No procesa pagos ni envíos reales.",
   },
 ];
