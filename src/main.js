@@ -1,81 +1,77 @@
-import "./style.css";
-import { profile, projects } from "./data.js";
-const projectCount = String(projects.length).padStart(2, "0");
-const arrow = '<span aria-hidden="true">↗</span>';
-document.querySelector("#app").innerHTML = `
-<a class="skip" href="#main">Saltar al contenido</a>
-<header><a class="logo" href="#inicio" aria-label="Lester David, inicio">LD<span class="logo-dot">.</span><span class="logo-label">SOFTWARE / PORTFOLIO</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav">Menú <span>☰</span></button><nav id="nav"><a href="#proyectos">Proyectos</a><a href="#sobre-mi">Sobre mí</a><a class="nav-contact" href="#contacto">Hablemos ${arrow}</a></nav></header>
-<main id="main"><section class="hero" id="inicio"><div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> DESARROLLO & GESTIÓN DE SOFTWARE</p><h1>Ideas claras.<br>Software con<br><span>propósito.</span></h1><p class="intro">Soy <strong>${profile.shortName}</strong>, estudiante de ${profile.degree}. Este es mi espacio para compartir lo que construyo y lo que viene después.</p><div class="hero-actions"><a class="button primary" href="#proyectos">Explorar proyectos <span>↓</span></a><a class="text-link" href="#contacto">Conectemos ${arrow}</a></div><div class="hero-note"><span>EN FORMACIÓN, EN MOVIMIENTO.</span><span>${profile.semester}</span></div></div><div class="hero-art" aria-hidden="true"><div class="art-top"><span>LD / DIGITAL SYSTEMS</span><span>01 — ${projectCount}</span></div><div class="orbital"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div><div class="core">&lt;LD /&gt;</div><span class="node n1"></span><span class="node n2"></span><span class="node n3"></span></div><div class="art-bottom"><span>IDEA → CÓDIGO → EXPERIENCIA</span><span class="cross">+</span></div></div></section>
-<div class="section-strip"><span>PROYECTOS INTERACTIVOS. EXPLORACIÓN CONTINUA.</span><span>WEB / PRODUCTO / EXPERIENCIA</span></div>
-<section class="projects section" id="proyectos"><div class="section-heading"><div><p class="eyebrow">01 / TRABAJO SELECCIONADO</p><h2>De la idea a la web<span>.</span></h2></div><p>Cinco proyectos, distintos contextos.<br>Una misma curiosidad por construir.</p></div><div class="filters" role="group" aria-label="Filtrar proyectos">${["Todos", ...new Set(projects.map((p) => p.category))].map((f, i) => `<button class="filter ${i === 0 ? "active" : ""}" aria-pressed="${i === 0}" data-filter="${f}">${f}${i === 0 ? ` <span>${projectCount}</span>` : ""}</button>`).join("")}</div><div class="project-grid">${projects.map((p) => `<article class="project-card" data-category="${p.category}"><button class="project-visual ${p.color}" data-project="${p.id}" aria-label="Ver detalles de ${p.name}"><div class="visual-top"><span>${p.type}</span><span>${p.number} / ${projectCount}</span></div><div class="visual-design"><div class="shape"></div><h3>${p.visual.replace("\n", "<br>")}</h3><p>${p.subtitle}</p></div><div class="visual-bottom"><span>IDENTIDAD VISUAL DEL PROYECTO</span><span class="round-arrow">↗</span></div></button><div class="project-info"><div><p>${p.category} <span>/ PROYECTO WEB</span></p><h3>${p.name}</h3></div><a class="project-open" href="${p.url}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${p.name} en otra pestaña">${arrow}</a></div><p class="project-description">${p.description}</p><div class="project-actions"><a href="${p.url}" target="_blank" rel="noopener noreferrer" aria-label="Ver demo de ${p.name}">Ver demo ${arrow}</a><a href="${p.repo}" target="_blank" rel="noopener noreferrer" aria-label="Ver código de ${p.name} en GitHub">Ver código ${arrow}</a></div></article>`).join("")}</div><p class="project-footnote">Las composiciones gráficas representan cada proyecto. Abre el sitio para explorar su versión publicada.</p></section>
-<section class="about section" id="sobre-mi"><div class="about-title"><p class="eyebrow">02 / SOBRE MÍ</p><h2>Aprender.<br>Construir.<br><span>Seguir creciendo.</span></h2><div class="signature">Lester David <span>/ LD</span></div></div><div class="about-content"><p class="about-lead">Me interesa convertir ideas en experiencias digitales que se puedan usar, explorar y mejorar.</p><p>Soy ${profile.name}, estudiante de ${profile.semester} de ${profile.degree}. Mi portafolio reúne proyectos de turismo, presencia corporativa, educación, contenido y ecommerce: distintos escenarios para poner en práctica mi formación.</p><p>Estoy construyendo mi camino profesional con cada proyecto, combinando aprendizaje, desarrollo y atención a la experiencia de quien utiliza una web.</p><div class="education"><span class="small-label">FORMACIÓN ACTUAL</span><h3>${profile.degree}</h3><p>${profile.semester} <span>·</span> Etapa universitaria</p></div><div class="interests"><span>Desarrollo web</span><span>Experiencias digitales</span><span>Gestión de software</span></div></div></section>
-<section class="contact section" id="contacto"><p class="eyebrow">03 / SIGUIENTE CONVERSACIÓN</p><div class="contact-heading"><h2>¿Tienes una idea?<br><span>Hablemos de ella.</span></h2><a class="contact-circle" href="mailto:${profile.email}" aria-label="Enviar un correo">↗</a></div><p class="contact-intro">Para conversar sobre proyectos, oportunidades o colaboraciones,<br>puedes contactarme directamente.</p><div class="contact-grid"><a class="contact-item" href="mailto:${profile.email}"><span>CORREO ELECTRÓNICO</span><strong>${profile.email}</strong><span class="contact-arrow">↗</span></a><a class="contact-item" href="https://wa.me/${profile.whatsapp}" target="_blank" rel="noopener noreferrer"><span>WHATSAPP</span><strong>${profile.phone}</strong><span class="contact-arrow">↗</span></a></div><button class="copy-email" id="copy-email">Copiar correo <span>⧉</span></button><p id="copy-status" class="sr-only" role="status"></p></section></main>
-<footer><a class="logo" href="#inicio">LD<span class="logo-dot">.</span></a><p>© ${new Date().getFullYear()} ${profile.name}</p><a href="#inicio">Volver arriba ↑</a></footer>
-<dialog id="project-dialog"><div class="dialog-top"><span class="eyebrow">DETALLES DEL PROYECTO</span><button class="dialog-close" aria-label="Cerrar detalles">✕</button></div><div id="dialog-content"></div></dialog>`;
-document.querySelector(".menu-toggle").addEventListener("click", (e) => {
-  const b = e.currentTarget;
-  const open = b.getAttribute("aria-expanded") !== "true";
-  b.setAttribute("aria-expanded", open);
-  document.querySelector("nav").classList.toggle("open", open);
-});
-document.querySelectorAll("nav a").forEach((a) =>
-  a.addEventListener("click", () => {
-    document.querySelector("nav").classList.remove("open");
-    document
-      .querySelector(".menu-toggle")
-      .setAttribute("aria-expanded", "false");
-  }),
-);
-document.querySelectorAll(".filter").forEach((b) =>
-  b.addEventListener("click", () => {
-    document.querySelectorAll(".filter").forEach((x) => {
-      x.classList.toggle("active", x === b);
-      x.setAttribute("aria-pressed", x === b);
-    });
-    document
-      .querySelectorAll(".project-card")
-      .forEach(
-        (c) =>
-          (c.hidden =
-            b.dataset.filter !== "Todos" &&
-            c.dataset.category !== b.dataset.filter),
-      );
-  }),
-);
-const dialog = document.querySelector("#project-dialog");
-document.querySelectorAll("[data-project]").forEach((b) =>
-  b.addEventListener("click", () => {
-    const p = projects.find((p) => p.id === b.dataset.project);
-    document.querySelector("#dialog-content").innerHTML =
-      `<p class="dialog-category">${p.number} / ${p.type}</p><h2>${p.name}</h2><p>${p.details}</p><a class="button primary" href="${p.url}" target="_blank" rel="noopener noreferrer">Ver demo ${arrow}</a><a class="dialog-code" href="${p.repo}" target="_blank" rel="noopener noreferrer">Ver código en GitHub ${arrow}</a>`;
-    dialog.showModal();
-  }),
-);
-document
-  .querySelector(".dialog-close")
-  .addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (e) => {
-  if (e.target === dialog) {
-    const r = dialog.getBoundingClientRect();
-    if (
-      e.clientX < r.left ||
-      e.clientX > r.right ||
-      e.clientY < r.top ||
-      e.clientY > r.bottom
-    )
-      dialog.close();
-  }
-});
-document.querySelector("#copy-email").addEventListener("click", async (e) => {
-  const button = e.currentTarget;
-  try {
-    await navigator.clipboard.writeText(profile.email);
-    button.innerHTML = "Correo copiado <span>✓</span>";
-    document.querySelector("#copy-status").textContent =
-      "Correo copiado al portapapeles";
-  } catch {
-    document.querySelector("#copy-status").classList.remove("sr-only");
-    document.querySelector("#copy-status").textContent =
-      "Copia este correo: " + profile.email;
-  }
-});
+import './style.css';
+import { profile, projects as sourceProjects } from './data.js';
+
+const arrow = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const codeIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const tags = {cancun:['Turismo','Reservas'],construction:['Corporativo','Cotizador'],ragut:['Educación','Campus'],wiki:['Videojuegos','Wiki'],nexo:['Ecommerce','Carrito']};
+const projects = sourceProjects.map(p => ({...p, image:`/projects/${p.id}.jpg`, tags:tags[p.id]}));
+const featured = [projects[4], projects[0], projects[1], projects[2], projects[3]];
+const total = String(projects.length).padStart(2,'0');
+const external = 'target="_blank" rel="noopener noreferrer"';
+const projectCard = (p, i) => `<article class="project-card reveal ${i===0?'project-featured':''}" data-category="${p.category}">
+  <button class="project-cover ${p.color}" data-project="${p.id}" aria-label="Ver detalles de ${p.name}">
+    <span class="project-number">${p.number} / ${total}</span><span class="cover-orbit" aria-hidden="true"></span>
+    <span class="mini-browser"><span class="browser-bar"><i></i><i></i><i></i><span>${p.name}</span></span><img src="${p.image}" alt="Vista de ${p.name}" width="1440" height="900" loading="lazy" decoding="async"></span>
+    <span class="cover-cta">Explorar proyecto ${arrow}</span>
+  </button>
+  <div class="project-body"><div class="project-label"><span>${p.category}</span><span>${p.number}</span></div><h3>${p.name}</h3><p>${p.description}</p><div class="project-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}<span>JavaScript</span></div><div class="project-actions"><a href="${p.url}" ${external} aria-label="Ver demo de ${p.name}">Ver demo ${arrow}</a><a href="${p.repo}" ${external} aria-label="Ver código de ${p.name}">${codeIcon} Código</a><button data-project="${p.id}" aria-label="Ver detalles de ${p.name}">Detalles <span>+</span></button></div></div>
+</article>`;
+
+document.querySelector('#app').innerHTML = `
+<a class="skip" href="#main">Saltar al contenido</a><div class="reading-progress" aria-hidden="true"></div>
+<header class="site-header"><a class="logo" href="#inicio" aria-label="Lester David, inicio">ld<span>•</span></a><nav id="navigation" aria-label="Navegación principal"><a href="#proyectos">Proyectos <span>${total}</span></a><a href="#sobre-mi">Sobre mí</a><a href="#contacto" class="nav-contact">Conectemos ${arrow}</a></nav><button class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="Abrir menú"><span></span><span></span></button></header>
+<main id="main">
+<section class="hero" id="inicio"><div class="hero-grid" aria-hidden="true"></div><div class="hero-topline"><span>LESTER DAVID / PORTAFOLIO</span><span>DESARROLLO WEB & EXPERIENCIAS DIGITALES</span></div>
+<div class="hero-layout"><div class="hero-copy"><p class="eyebrow hero-enter"><span class="status-dot"></span> Ideas, código y un poco de curiosidad.</p><h1 class="hero-enter">Ideas que<br>cobran <span class="hero-word">vida<svg viewBox="0 0 390 22" aria-hidden="true"><path d="M4 14C94 2 257 2 382 12M65 20C146 10 264 9 337 15"/></svg></span><span class="period">.</span></h1><p class="hero-intro hero-enter">Soy <strong>${profile.shortName}</strong>. Estudio ingeniería de software y construyo experiencias web donde el diseño y la funcionalidad se encuentran.</p><div class="hero-actions hero-enter"><a class="button button-light" href="#proyectos">Descubre mis proyectos ${arrow}</a><a class="hero-contact" href="#contacto">Hablemos de tu idea <span>↗</span></a></div><div class="hero-note hero-enter"><span class="note-line"></span><span>Aprendiendo. Construyendo. Evolucionando.</span></div></div>
+<div class="showcase hero-enter"><div class="showcase-caption"><span><i></i> EN MI ESCRITORIO</span><span>VISTA PREVIA / WEB</span></div><div class="showcase-scene"><div class="showcase-back" aria-hidden="true"><span class="browser-bar"><i></i><i></i><i></i></span><img src="${projects[0].image}" alt="" width="1440" height="900"></div><a class="showcase-main" id="featured-link" href="${featured[0].url}" ${external} aria-label="Abrir ${featured[0].name}"><span class="browser-bar"><i></i><i></i><i></i><span id="featured-domain">${new URL(featured[0].url).hostname}</span><span class="browser-live">● LIVE</span></span><div class="showcase-screen">${featured.map((p,i)=>`<img class="featured-slide ${i===0?'is-active':''}" src="${p.image}" alt="Vista previa de ${p.name}" width="1440" height="900" ${i===0?'fetchpriority="high"':'loading="lazy"'}>`).join('')}</div></a><div class="floating-label float-one" aria-hidden="true">${codeIcon}<span>Del código<br><strong>a la experiencia.</strong></span></div><div class="floating-label float-two" aria-hidden="true"><span class="label-star">✳</span><span>Diseñado para<br><strong>explorarlo.</strong></span></div></div><div class="showcase-controls"><div><span class="tiny-label">PROYECTO EN PANTALLA</span><strong id="featured-name">${featured[0].name}</strong></div><div class="slide-controls"><div class="slide-dots" role="group" aria-label="Elegir proyecto destacado">${featured.map((p,i)=>`<button class="slide-dot ${i===0?'is-active':''}" data-slide="${i}" aria-label="Mostrar ${p.name}" aria-pressed="${i===0}"></button>`).join('')}</div><button class="autoplay-toggle" aria-label="Pausar presentación" aria-pressed="false">Ⅱ</button></div></div></div></div>
+<div class="hero-bottom"><a href="#proyectos" class="scroll-cue"><span>↓</span> SIGUE EXPLORANDO</a><span>${total} PROYECTOS · MUCHAS IDEAS POR DELANTE</span><span class="hero-bottom-mark" aria-hidden="true">↙</span></div></section>
+<div class="skills-strip" aria-label="Tecnologías y enfoque"><div><span>JavaScript</span><i>✳</i><span>HTML & CSS</span><i>✳</i><span>Diseño responsive</span><i>✳</i><span>Git & GitHub</span><i>✳</i><span>Vite</span><i>✳</i><span>Experiencia de usuario</span></div></div>
+<section class="projects section" id="proyectos"><div class="section-heading reveal"><div><p class="eyebrow">01 — LO QUE HE CONSTRUIDO</p><h2>Menos imaginar.<br><span>Más hacerlo real.</span></h2></div><div class="section-description"><span class="section-index">(${total})</span><p>Turismo, educación, comercio y más.<br>Cada proyecto, una forma distinta<br>de resolver y de aprender.</p></div></div><div class="filters reveal" role="group" aria-label="Filtrar proyectos">${['Todos',...new Set(projects.map(p=>p.category))].map((category,i)=>`<button data-filter="${category}" aria-pressed="${i===0}" class="filter ${i===0?'is-active':''}">${category}${i===0?`<span>${total}</span>`:''}</button>`).join('')}</div><div class="project-grid">${projects.map(projectCard).join('')}</div><p class="project-footnote reveal"><span class="status-dot"></span> Explora las demos, descubre los detalles o echa un vistazo al código.</p></section>
+<section class="about section" id="sobre-mi"><div class="about-heading reveal"><p class="eyebrow">02 — LA PERSONA DETRÁS DEL CÓDIGO</p><h2>Hola, soy Lester.<br><span>Siempre en modo aprender.</span></h2></div><div class="about-grid"><div class="identity-card reveal"><div class="identity-top"><span>ACERCA DE MÍ</span><span>↗</span></div><div class="monogram" aria-hidden="true">L<span>D</span><i>✳</i></div><div class="identity-bottom"><strong>${profile.shortName}</strong><span>Desarrollador web en formación</span></div></div><div class="about-story reveal"><p class="about-lead">Me gusta ese momento en que una idea empieza a funcionar en la pantalla.</p><p>Soy ${profile.name}, estudiante de ${profile.degree}. Me interesa construir interfaces claras, cuidar los detalles y entender cómo cada decisión cambia la experiencia de quien las usa.</p><p>Este espacio reúne lo que voy aprendiendo y convirtiendo en proyectos. Cada uno es una oportunidad para probar, equivocarme, resolver y seguir creciendo.</p><div class="education"><span class="education-icon">↗</span><div><span class="tiny-label">EN FORMACIÓN</span><h3>${profile.degree}</h3><p>${profile.semester}</p></div></div></div><div class="approach-card reveal"><span class="tiny-label">CÓMO ME GUSTA CONSTRUIR</span><div><span>01</span><h3>Entender primero.</h3><p>Qué necesita la persona y qué tiene que resolver la experiencia.</p></div><div><span>02</span><h3>Cuidar los detalles.</h3><p>La jerarquía, la interacción y eso que hace que todo se sienta bien.</p></div><div><span>03</span><h3>Seguir mejorando.</h3><p>Probar lo que funciona, revisar lo que falta y darle otra vuelta.</p></div></div></div></section>
+<section class="contact section" id="contacto"><div class="contact-top reveal"><p class="eyebrow">03 — EL SIGUIENTE PROYECTO EMPIEZA CON UN HOLA</p><span class="contact-spark" aria-hidden="true">✳</span></div><div class="contact-title reveal"><h2>¿Y si construimos<br><span>algo juntos?</span></h2><a class="contact-circle" href="mailto:${profile.email}" aria-label="Enviar un correo a Lester David">${arrow}</a></div><div class="contact-bottom reveal"><p>Una idea, una oportunidad o una conversación.<br>Me encantará saber de ti.</p><div class="contact-links"><a href="mailto:${profile.email}"><span class="tiny-label">ESCRÍBEME</span><strong>${profile.email} ${arrow}</strong></a><a href="https://wa.me/${profile.whatsapp}" ${external}><span class="tiny-label">O POR WHATSAPP</span><strong>${profile.phone} ${arrow}</strong></a><button id="copy-email">Copiar correo <span>⧉</span></button><p id="copy-status" role="status"></p></div></div></section>
+</main><footer><a href="#inicio" class="logo" aria-label="Volver al inicio">ld<span>•</span></a><p>Hecho con intención, curiosidad y código.<br>© ${new Date().getFullYear()} ${profile.shortName}</p><a href="#inicio" class="back-top">Volver arriba ${arrow}</a></footer>
+<dialog id="project-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="tiny-label">DETRÁS DEL PROYECTO</span><button class="dialog-close" aria-label="Cerrar detalles">✕</button></div><div id="dialog-content"></div></dialog>`;
+
+const menuButton = document.querySelector('.menu-toggle');
+const navigation = document.querySelector('#navigation');
+const closeMenu = () => { menuButton.setAttribute('aria-expanded','false'); menuButton.setAttribute('aria-label','Abrir menú'); navigation.classList.remove('is-open'); };
+menuButton.addEventListener('click',()=>{ const open=menuButton.getAttribute('aria-expanded')!=='true'; menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú');navigation.classList.toggle('is-open',open); });
+navigation.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const revealObserver = new IntersectionObserver(entries=>entries.forEach(entry=>{ if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target);} }),{threshold:0.08});
+if(!reduceMotion.matches){document.documentElement.classList.add('motion-ready');document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));}
+reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches)document.documentElement.classList.remove('motion-ready');});
+
+document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{
+ document.querySelectorAll('[data-filter]').forEach(b=>{const active=b===button;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active));});
+ document.querySelectorAll('.project-card').forEach(card=>{card.hidden=button.dataset.filter!=='Todos'&&card.dataset.category!==button.dataset.filter;if(!card.hidden)card.classList.add('is-visible');});
+}));
+
+const dialog=document.querySelector('#project-dialog');let lastProjectTrigger;
+document.querySelectorAll('[data-project]').forEach(button=>button.addEventListener('click',()=>{
+ const p=projects.find(project=>project.id===button.dataset.project);lastProjectTrigger=button;
+ document.querySelector('#dialog-content').innerHTML=`<img class="dialog-image" src="${p.image}" alt="Vista de ${p.name}" width="1440" height="900"><p class="eyebrow">${p.number} / ${p.category}</p><h2 id="dialog-title">${p.name}</h2><p>${p.details}</p><div class="project-tags"><span>JavaScript</span><span>HTML & CSS</span><span>Vite</span></div><div class="dialog-actions"><a class="button button-dark" href="${p.url}" ${external}>Ver demo ${arrow}</a><a href="${p.repo}" ${external}>${codeIcon} Ver código</a></div>`;
+ dialog.showModal();document.body.classList.add('dialog-open');
+}));
+const closeDialog=()=>dialog.close();document.querySelector('.dialog-close').addEventListener('click',closeDialog);
+dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeDialog();}});
+dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');lastProjectTrigger?.focus({preventScroll:true});});
+
+document.querySelector('#copy-email').addEventListener('click',async()=>{const status=document.querySelector('#copy-status');try{await navigator.clipboard.writeText(profile.email);status.textContent='Correo copiado. ¡Hablemos!';}catch{status.textContent=profile.email;}});
+
+let activeSlide=0;let autoplay=!reduceMotion.matches;let showcaseVisible=true;const toggle=document.querySelector('.autoplay-toggle');
+function setSlide(index){activeSlide=index;const project=featured[index];document.querySelectorAll('.featured-slide').forEach((img,i)=>img.classList.toggle('is-active',i===index));document.querySelectorAll('[data-slide]').forEach((b,i)=>{b.classList.toggle('is-active',i===index);b.setAttribute('aria-pressed',String(i===index));});document.querySelector('#featured-name').textContent=project.name;document.querySelector('#featured-domain').textContent=new URL(project.url).hostname;const link=document.querySelector('#featured-link');link.href=project.url;link.setAttribute('aria-label',`Abrir ${project.name}`);}
+function updatePlayback(){toggle.textContent=autoplay?'Ⅱ':'▷';toggle.setAttribute('aria-label',autoplay?'Pausar presentación':'Reanudar presentación');toggle.setAttribute('aria-pressed',String(!autoplay));}
+updatePlayback();toggle.addEventListener('click',()=>{autoplay=!autoplay;updatePlayback();});
+document.querySelectorAll('[data-slide]').forEach(button=>button.addEventListener('click',()=>{autoplay=false;updatePlayback();setSlide(Number(button.dataset.slide));}));
+const showcase=document.querySelector('.showcase');new IntersectionObserver(entries=>{showcaseVisible=entries[0].isIntersecting;}).observe(showcase);
+setInterval(()=>{if(autoplay&&!reduceMotion.matches&&showcaseVisible&&!document.hidden&&!showcase.matches(':hover, :focus-within'))setSlide((activeSlide+1)%featured.length);},6500);
+reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches){autoplay=false;updatePlayback();}});
+
+let scrollPending=false;const progress=document.querySelector('.reading-progress');const header=document.querySelector('.site-header');
+function updateScroll(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${max>0?scrollY/max:0})`;header.classList.toggle('is-scrolled',scrollY>24);scrollPending=false;}
+addEventListener('scroll',()=>{if(!scrollPending){scrollPending=true;requestAnimationFrame(updateScroll);}},{passive:true});updateScroll();
+const activeNavObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)navigation.querySelectorAll('a').forEach(a=>a.classList.toggle('is-current',a.hash===`#${entry.target.id}`));});},{rootMargin:'-20% 0px -55% 0px'});
+document.querySelectorAll('main > section[id]').forEach(section=>activeNavObserver.observe(section));
